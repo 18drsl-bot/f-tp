@@ -8,7 +8,6 @@ local function isValidTeleportPosition(targetPart, targetPosition)
     if not targetPart then
         return false
     end
-    -- Fixed logic: Usually transparent parts are non-collidable, but keeping your original logic structure
     if targetPart.Transparency >= 1 and targetPart.CanCollide then
         return false
     end
@@ -33,15 +32,13 @@ local function teleport()
     if not isValidTeleportPosition(targetPart, target.Position) then return end
     
     local teleportPosition = target.Position + Vector3.new(0, VERTICAL_OFFSET, 0)
-    rootPart.CFrame = CFrame.new(teleportPosition) -- Simplified CFrame assignment
+    rootPart.CFrame = CFrame.new(teleportPosition)
 end
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     
     if input.KeyCode == Enum.KeyCode.F then
-        if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) or UserInputService:IsKeyDown(Enum.KeyCode.RightControl) then
-            teleport()
-        end
+        teleport()
     end
-end)   
+end)
